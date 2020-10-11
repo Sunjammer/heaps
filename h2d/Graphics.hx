@@ -668,6 +668,49 @@ class Graphics extends Drawable {
 		addVertex(x, y, curR, curG, curB, curA, x * ma + y * mc + mx, x * mb + y * md + my);
 	}
 
+	/**
+	 * Batch data is
+	 * 		n: tile index
+	 * 		n+1: x position
+	 * 		n+2: y position
+	 * 
+	 * if rotateAndScale...
+	 * 		n+3: rotation in radians
+	 * 		n+4: scale on x axis
+	 * 		n+5: scale on y axis
+	 */
+	public function drawTiles(tiles:Array<h2d.Tile>, batchData:Array<Float>, rotateAndScale:Bool = false):Void{
+		flush();
+		var tex = null;
+		for(t in tiles){
+			if(tex!=null){
+				if(t.getTexture() != tex)
+					throw 'All tiles must use same texture';
+			}
+			tex = t.getTexture();
+		}
+		
+		var n = 0;
+		if(rotateAndScale){
+			while(n < batchData.length){
+				var tile = batchData[n];
+				var x    = batchData[n+1];
+				var y    = batchData[n+2];
+				var r    = batchData[n+3];
+				var sx   = batchData[n+4];
+				var sy   = batchData[n+5];
+				n += 6;
+			}
+		}else{
+			while(n < batchData.length){
+				var tile = batchData[n];
+				var x    = batchData[n+1];
+				var y    = batchData[n+2];
+				n += 3;
+			}
+		}
+		
+	}
 	public function addVertex( x : Float, y : Float, r : Float, g : Float, b : Float, a : Float, u : Float = 0., v : Float = 0. ) {
 		if( x < xMin ) xMin = x;
 		if( y < yMin ) yMin = y;
