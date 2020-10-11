@@ -711,6 +711,25 @@ class Graphics extends Drawable {
 		}
 		
 	}
+
+	public function drawTriangles(vertices:Array<Float>, uvs:Array<Float>, indices:Array<Int>, culling:TriangleCulling = None):Void{
+		flush();
+		var vidx = 0;
+		while(vidx < vertices.length){
+			var uvidx = vidx % uvs.length;
+			var x = vertices[vidx];
+			var y = vertices[vidx+1];
+			var u = uvs[uvidx];
+			var v = uvs[uvidx+1];
+			vidx += 2;
+			content.add(x, y, u, v, curR, curG, curB, curA);
+		}
+		for(i in indices){
+			content.addIndex(i);
+		}
+		flush();
+	}
+
 	public function addVertex( x : Float, y : Float, r : Float, g : Float, b : Float, a : Float, u : Float = 0., v : Float = 0. ) {
 		if( x < xMin ) xMin = x;
 		if( y < yMin ) yMin = y;
