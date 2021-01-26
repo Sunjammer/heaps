@@ -31,11 +31,17 @@ class Rand {
 	}
 
 	public static inline function inlineHash(n:Int, seed:Int) : Int {
+		#if !js
 		var n : haxe.Int32 = n;
+		#end
 		n *= 0xcc9e2d51;
 		n = (n << 15) | (n >>> 17);
 		n *= 0x1b873593;
+		#if !js
 		var h : haxe.Int32 = seed;
+		#else
+		var h = seed;
+		#end
 		h ^= n;
 		h = (h << 13) | (h >>> 19);
 		h = h*5 + 0xe6546b64;
