@@ -231,6 +231,10 @@ class CompressIMG extends Convert {
 		"RGBA32F" => "R32G32B32A32_FLOAT",
 	];
 
+	public static function doNothing(){
+
+	}
+
 	override function convert() {
 		var format = getParam("format");
 		var mips = hasParam("mips") && getParam("mips") == true;
